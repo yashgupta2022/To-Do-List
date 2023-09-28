@@ -1,0 +1,58 @@
+<%- include("header") -%>
+<div class="container">
+<div class="left">
+
+    <div class="box" id="heading">
+      <h1> Active To-Do Lists</h1>
+    </div>
+    
+    <div class="box">
+      <p style="text-align: center; text-decoration: underline;"> Click on To-Do Lists to Visit</p> 
+      <%allLists.forEach(function (newItem){%>
+        <form action="/deleteList/<%= listTitle %>" method="post">
+          <div class="item">
+            <a href="/<%= newItem.name %>"><%= newItem.name %></a>
+            <% if ( newItem.name != "HOME") { %>
+              <button class="checkbox" name="checkbox" value="<%= newItem._id %>" onclick="this.form.submit()">
+                <i class="fa-solid fa-trash icons fa-xs"></i>
+              </button>
+            <% } %>
+          </div>
+        </form>
+        
+      <%})%>
+  
+        <form class="item" action="/newList" method="post">
+          <input type="text" name="newItems" placeholder="Create New List" autocomplete="off">
+          <button type="submit"><i class="fa-solid fa-plus fa-xs"></i></button>
+        </form>
+    </div>
+</div>
+<div class="right">
+  <div class="box" id="heading">
+    <h1> <%= listTitle %> </h1>
+  </div>
+  
+  <div class="box">
+    
+    <%newListItems.forEach(function (newItem){%>
+      <form action="/delete" method="post">
+        <div class="item">
+        <p><%=  newItem.name  %></p>
+        <button type="submit" class ="checkbox" name="checkbox" value="<%= newItem._id %>" onclick="this.form.submit()" >
+          <i class="fa-solid fa-trash icons fa-xs"></i>          
+        </button>
+        </div>
+        <input type="hidden" name="listname" value=<%=listTitle%>>
+      </form>
+      
+    <%})%>
+
+      <form class="item" action="/newItem" method="post">
+        <input type="text" name="newItem" placeholder="Add New Item" autocomplete="off">
+        <button type="submit" name="list" value= <%=listTitle%>><i class="fa-solid fa-cart-plus fa-xs"></i> </button>
+      </form>
+  </div>
+</div>
+
+</div>
